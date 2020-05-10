@@ -25,9 +25,12 @@ export default class App extends React.Component {
       name: "\nVälkommen till\n Drink-Appen!",
       instructions: "",
       image: "https:\/\/www.thecocktaildb.com\/images\/media\/drink\/20d63k1504885263.jpg",
-      ingredients: ""
+      ingredients: "",
+      visible: false
     };
     this.getDrink = this.getDrink.bind(this);
+    this.toggleOverlay = this.toggleOverlay.bind(this);
+
   }
 
   getDrink(){
@@ -61,10 +64,29 @@ export default class App extends React.Component {
     });
   }
 
+  toggleOverlay(){
+    this.setState({visible: !this.state.visible})
+  };
+
 
   render(){
     return (
       <View style={styles.base}>
+            <TouchableOpacity style={styles.info} onPress={this.toggleOverlay}><Text style={{ fontSize: 30, color: "white" }}>i</Text></TouchableOpacity>
+            
+            {this.state.visible ? 
+            <View style={styles.infoOverlay}>
+              <Text style={{ fontSize: 17 }}>
+                1 oz = 3 cl
+                {"\n"}
+                1 cup = 2,4 dl
+              </Text>
+            </View>
+            :
+            <View></View>
+            }
+            
+
           <Image
             style={styles.image}
             source={{ uri: this.state.image }}/>
@@ -97,6 +119,31 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: "10%",
     borderRadius: 50
+  },
+  info: {
+    position: "absolute",
+    zIndex: 1,
+    alignItems:'center',
+    justifyContent:'center',
+    width:50,
+    height:50,
+    backgroundColor:'#bfa949',
+    borderRadius:50,
+    margin: 10,
+    borderColor: "#e0bf34",
+    borderWidth: 5
+  },
+  infoOverlay: {
+    position: "absolute",
+    zIndex: 1,
+    alignItems:'center',
+    justifyContent:'center',
+    alignSelf: "center",
+    marginTop: "20%",
+    width: "30%",
+    backgroundColor:'#969e98',
+    borderColor: "#4d524e",
+    borderWidth: 2
   },
   scroll: {
     flex: 7,
